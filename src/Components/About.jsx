@@ -10,7 +10,7 @@ import React from "react";
  * About background image
  *
  * Below is a sample image. Upload the image of your choice into the "images"
- * directory and import here for use. Then, set imageAltText to string that 
+ * directory and import here for use. Then, set imageAltText to string that
  * represents what you see in that image.
  *
  * Need an image? Check out https://unsplash.com to download a image you
@@ -24,7 +24,7 @@ const imageAltText = "purple and blue abstract background";
  * Sort description that expands on your title on the Home component.
  */
 const description =
-  "I'm a UI/UX student studying at Barnett Technical University. I enjoy creating unique and simplistic user interfaces in creative ways.";
+  "I'm a UI/UX student studying at SIES Graduate School of Technology. I enjoy creating unique and simplistic user interfaces in creative ways.";
 
 /**
  * List of some of skills or technologies you work on, are learning,
@@ -49,7 +49,7 @@ const detailOrQuote =
 
 const About = () => {
   return (
-    <section className="padding" id="about">
+    <section className="padding" id="about" style={{ animation: "fadeIn 2s ease-in-out" }}>
       <img className="background" src={image} alt={imageAltText} />
       <div
         style={{
@@ -73,7 +73,22 @@ const About = () => {
           }}
         >
           {skillsList.map((skill) => (
-            <li key={skill}>{skill}</li>
+            <li
+              key={skill}
+              style={{
+                transition: "color 0.3s, transform 0.3s",
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.color = "#1E90FF";
+                e.currentTarget.style.transform = "translateX(5px)";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.color = "inherit";
+                e.currentTarget.style.transform = "translateX(0)";
+              }}
+            >
+              {skill}
+            </li>
           ))}
         </ul>
         <hr />
@@ -82,5 +97,27 @@ const About = () => {
     </section>
   );
 };
+
+// Add CSS animations
+const styles = `
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+`;
+
+// Inject styles into the document head
+if (typeof document !== "undefined") {
+  const styleSheet = document.createElement("style");
+  styleSheet.type = "text/css";
+  styleSheet.innerText = styles;
+  document.head.appendChild(styleSheet);
+}
 
 export default About;
